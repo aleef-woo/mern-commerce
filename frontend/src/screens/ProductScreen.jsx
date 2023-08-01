@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
-import products from "../products";
 import Rating from "../components/Rating";
+import axios from "axios";
 
 const ProductScreen = () => {
+  const [product, setProduct] = useState({});
+
   const { id: productId } = useParams();
-  const product = products.find((p) => p.id === parseInt(productId));
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${productId}`);
+      setProduct(data);
+    };
+
+    fetchProduct();
+  }, [productId]);
 
   return (
     <>
@@ -24,12 +34,12 @@ const ProductScreen = () => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
-                value={product.rating.rate}
-                text={`${product.numReviews} reviews`}
+                value={product.rating}
+                text={`${product.numOfReviews} reviews`}
               />
             </ListGroup.Item>
             <ListGroup.Item>
-              Price: RM {product.price.toFixed(2)}
+              Price: RM {product.price?.toFixed(2)}
             </ListGroup.Item>
             <ListGroup.Item>Description: {product.description}</ListGroup.Item>
           </ListGroup>
@@ -41,7 +51,7 @@ const ProductScreen = () => {
                 <Row>
                   <Col>Price:</Col>
                   <Col>
-                    <strong>RM {product.price.toFixed(2)}</strong>
+                    <strong>RM {product.price?.toFixed(2)}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -50,7 +60,7 @@ const ProductScreen = () => {
                   <Col>Status:</Col>
                   <Col>
                     <strong>
-                      {product.rating.count > 0 ? "In Stock" : "Out of Stock"}
+                      {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                     </strong>
                   </Col>
                 </Row>
@@ -60,7 +70,7 @@ const ProductScreen = () => {
                   className="btn-block"
                   variant="dark"
                   type="button"
-                  disabled={product.rating.count === 0}
+                  disabled={product.countInStock === 0}
                 >
                   Add To Cart
                 </Button>
