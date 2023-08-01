@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import connectDB from "./config/db.js";
 import productRoutes from "./routes/productRoutes.js";
-import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
+import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 
 const port = process.env.PORT || 5000;
 
