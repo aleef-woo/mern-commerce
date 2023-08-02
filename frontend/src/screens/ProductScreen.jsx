@@ -1,17 +1,32 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
 import { useGetProductDetailQuery } from "../slices/productsApiSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import { addToCart } from "../slices/cartSlice";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [quantity, setQuantity] = useState(1);
+
   const {
     data: product,
     isLoading,
     error,
   } = useGetProductDetailQuery(productId);
+
+  const addToCartHandler = () => {
+    dispatch(addToCart({ ...product, quantity }));
+    navigate("/cart");
+  };
 
   return (
     <>
@@ -72,12 +87,48 @@ const ProductScreen = () => {
                       </Col>
                     </Row>
                   </ListGroup.Item>
+                  {product.countInStock > 0 && (
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Qty:</Col>
+                        <Col className="d-flex gap-3 pt-2">
+                          <Button
+                            type="button"
+                            variant="light"
+                            disabled={quantity <= 1}
+                            onClick={(e) =>
+                              setQuantity((prevQuantity) =>
+                                Number(prevQuantity - 1)
+                              )
+                            }
+                          >
+                            <FaMinus />
+                          </Button>
+                          <p className="my-auto">{quantity}</p>
+                          <Button
+                            type="button"
+                            variant="light"
+                            disabled={product.countInStock <= quantity}
+                            onClick={(e) =>
+                              setQuantity((prevQuantity) =>
+                                Number(prevQuantity + 1)
+                              )
+                            }
+                          >
+                            <FaPlus />
+                          </Button>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
+
                   <ListGroup.Item>
                     <Button
                       className="btn-block"
                       variant="dark"
                       type="button"
                       disabled={product.countInStock === 0}
+                      onClick={addToCartHandler}
                     >
                       Add To Cart
                     </Button>
