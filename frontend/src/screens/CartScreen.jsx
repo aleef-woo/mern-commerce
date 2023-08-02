@@ -101,7 +101,7 @@ const CartScreen = () => {
                 type="button"
                 className="btn-block"
                 disabled={cartItems.length === 0}
-                variant="dark"
+                variant="light"
                 onClick={checkoutHandler}
               >
                 Checkout

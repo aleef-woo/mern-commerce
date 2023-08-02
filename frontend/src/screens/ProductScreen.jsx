@@ -43,7 +43,7 @@ const ProductScreen = () => {
         <>
           <Row>
             <Col md={5}>
-              <Image src={product.image} alt={product.title} fluid />
+              <Image src={product.image} alt={product.title} fluid rounded />
             </Col>
             <Col md={4}>
               <ListGroup variant="flush">
@@ -125,7 +125,7 @@ const ProductScreen = () => {
                   <ListGroup.Item>
                     <Button
                       className="btn-block"
-                      variant="dark"
+                      variant="light"
                       type="button"
                       disabled={product.countInStock === 0}
                       onClick={addToCartHandler}

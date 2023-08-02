@@ -1,20 +1,27 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Image, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
 const Product = ({ product }) => {
   return (
-    <Card className="my-3 p-3 rounded">
-      <Link to={`/products/${product._id}`} style={{ height: "20em" }}>
-        <Card.Img src={product.image} variant="top" height="100%" />
+    <Card className="my-3 p-3 rounded h-100">
+      <Link to={`/products/${product._id}`} className="h-100">
+        <Image
+          src={product.image}
+          className="h-100 object-fit-fill"
+          fluid
+          rounded
+        />
       </Link>
       <Card.Body>
-        <Link to={`/products/${product._id}`}>
-          <Card.Title as="div" className="text-nowrap text-truncate">
-            <strong>{product.title}</strong>
-          </Card.Title>
-        </Link>
+        <Navbar.Text>
+          <Link to={`/products/${product._id}`}>
+            <Card.Title as="div" className="text-nowrap text-truncate">
+              <strong>{product.title}</strong>
+            </Card.Title>
+          </Link>
+        </Navbar.Text>
         <Card.Text as="div">
           <Rating
             value={product.rating}

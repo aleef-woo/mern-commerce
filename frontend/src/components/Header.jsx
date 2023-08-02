@@ -8,7 +8,7 @@ const Header = () => {
   const { cartItems } = useSelector((state) => state.cart);
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
+      <Navbar bg="light" data-bs-theme="light" expand="md" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>MERN Commerce</Navbar.Brand>
