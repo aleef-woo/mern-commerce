@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, Image, Navbar } from "react-bootstrap";
+import { Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
+import { LinkContainer } from "react-router-bootstrap";
 
 const Product = ({ product }) => {
   return (
@@ -15,13 +16,11 @@ const Product = ({ product }) => {
         />
       </Link>
       <Card.Body>
-        <Navbar.Text>
-          <Link to={`/products/${product._id}`}>
-            <Card.Title as="div" className="text-nowrap text-truncate">
-              <strong>{product.title}</strong>
-            </Card.Title>
-          </Link>
-        </Navbar.Text>
+        <LinkContainer to={`/products/${product._id}`}>
+          <Card.Title as="div" className="text-nowrap text-truncate">
+            <strong>{product.title}</strong>
+          </Card.Title>
+        </LinkContainer>
         <Card.Text as="div">
           <Rating
             value={product.rating}
