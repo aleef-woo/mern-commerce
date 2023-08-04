@@ -42,7 +42,13 @@ const CartScreen = () => {
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={3}>
-                    <Link to={`/products/${item._id}`}> {item.title} </Link>
+                    <Link
+                      className="text-decoration-none link-light"
+                      to={`/products/${item._id}`}
+                    >
+                      {" "}
+                      {item.title}{" "}
+                    </Link>
                   </Col>
                   <Col md={2}>RM {item.price}</Col>
                   <Col md={1} className="d-flex gap-3">
@@ -84,7 +90,7 @@ const CartScreen = () => {
         )}
       </Col>
       <Col md={4}>
-        <Card>
+        <Card className="shadow-lg">
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>

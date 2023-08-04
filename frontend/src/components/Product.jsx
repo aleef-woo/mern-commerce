@@ -2,7 +2,6 @@ import React from "react";
 import { Card, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
-import { LinkContainer } from "react-router-bootstrap";
 
 const Product = ({ product }) => {
   return (
@@ -16,11 +15,14 @@ const Product = ({ product }) => {
         />
       </Link>
       <Card.Body>
-        <LinkContainer to={`/products/${product._id}`}>
+        <Link
+          to={`/products/${product._id}`}
+          className="text-decoration-none link-light"
+        >
           <Card.Title as="div" className="text-nowrap text-truncate">
             <strong>{product.title}</strong>
           </Card.Title>
-        </LinkContainer>
+        </Link>
         <Card.Text as="div">
           <Rating
             value={product.rating}
