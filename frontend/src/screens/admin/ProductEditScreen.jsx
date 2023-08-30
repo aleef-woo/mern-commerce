@@ -68,7 +68,10 @@ const ProductEditScreen = () => {
     let signedUrl;
 
     if (uploadedImage) {
-      signedUrl = await getSignUrl(uploadedImage);
+      signedUrl = await getSignUrl({
+        uploadedImage: uploadedImage.type,
+        productName: title,
+      });
       await uploadImage({ signedUrl, uploadedImage });
     }
 

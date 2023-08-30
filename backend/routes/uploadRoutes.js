@@ -1,31 +1,46 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { v4 as uuidv4 } from "uuid";
+import { admin, protect } from "../middlewares/authMiddleware.js";
+import asyncHandler from "../middlewares/asyncHandler.js";
 import dotenv from "dotenv";
 import express from "express";
+
 const router = express.Router();
 
 dotenv.config();
 
-import asyncHandler from "../middlewares/asyncHandler.js";
-import { admin, protect } from "../middlewares/authMiddleware.js";
-
 // create your client and specify region
-const s3Client = new S3Client({ region: "ap-southeast-1" });
+const s3Client = new S3Client({ region: process.env.AWS_REGION_BUCKET });
 
 router.route("/").post(
   protect,
   admin,
   asyncHandler(async (req, res) => {
-    const key = `${req.user._id}/${uuidv4()}.${req.query.fileType.split('/').pop()}`;
-    
+    let key = `${req.user._id}/${
+      req.query.productName
+    }/${uuidv4()}.${req.query.fileType.split("/").pop()}`;
+
+    if (req.query.key) {
+      key = req.query.key;
+    }
+
     const bucketParams = {
       Bucket: process.env.AWS_RESOURCE_BUCKET,
       Key: key,
       ContentType: req.query.fileType,
     };
 
-    const command = new PutObjectCommand(bucketParams);
+    let command;
+    if (req.query.key) {
+      command = new DeleteObjectCommand(bucketParams);
+    } else {
+      command = new PutObjectCommand(bucketParams);
+    }
 
     const signedUrl = await getSignedUrl(s3Client, command, {
       expiresIn: 3600,
