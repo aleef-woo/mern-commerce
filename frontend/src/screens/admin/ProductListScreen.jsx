@@ -39,6 +39,7 @@ const ProductListScreen = () => {
         });
         await deleteProduct(id);
         await deleteProductImage(signedUrl);
+        toast.success("Product deleted");
         refetch();
       } catch (error) {
         toast.error(error?.data?.message || error.error);
