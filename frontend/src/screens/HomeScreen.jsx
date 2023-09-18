@@ -5,6 +5,8 @@ import Product from "../components/Product";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
+import ProductCarousel from "../components/ProductCarousel";
+import Meta from "../components/Meta";
 
 const HomeScreen = () => {
   const { pageNumber, keyword } = useParams();
@@ -15,7 +17,9 @@ const HomeScreen = () => {
 
   return (
     <>
-      {keyword && (
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
         <Link to="/" className="btn btn-light mb-4">
           Go Back
         </Link>
@@ -28,6 +32,7 @@ const HomeScreen = () => {
         </Message>
       ) : (
         <>
+          <Meta />
           <h1>Latest Products</h1>
           <Row>
             {data.products.map((product) => (

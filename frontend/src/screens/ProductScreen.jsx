@@ -20,6 +20,7 @@ import Message from "../components/Message";
 import { addToCart } from "../slices/cartSlice";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
+import Meta from "../components/Meta";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -74,6 +75,7 @@ const ProductScreen = () => {
         </Message>
       ) : (
         <>
+          <Meta title={product.title} description={product.description} />
           <Row>
             <Col md={5}>
               <Image src={product.image} alt={product.title} fluid rounded />
