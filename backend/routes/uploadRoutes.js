@@ -1,6 +1,7 @@
 import express from "express";
 const router = express.Router();
-
+import dotenv from "dotenv";
+dotenv.config();
 import {
   S3Client,
   PutObjectCommand,
@@ -52,6 +53,7 @@ router.route("/").post(
       res.status(401);
       throw new Error("Presigned error!");
     }
+
   })
 );
 
