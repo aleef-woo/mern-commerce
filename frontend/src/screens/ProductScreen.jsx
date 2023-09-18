@@ -185,7 +185,7 @@ const ProductScreen = () => {
                     <p>{review.comment}</p>
                   </ListGroup.Item>
                 ))}
-                {!userInfo.isAdmin && (
+                {!userInfo?.isAdmin && (
                   <ListGroup.Item>
                     <h2>Write a Review</h2>
                     {loadingReview && <Loader />}
