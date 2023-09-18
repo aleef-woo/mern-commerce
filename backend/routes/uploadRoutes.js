@@ -1,3 +1,6 @@
+import express from "express";
+const router = express.Router();
+
 import {
   S3Client,
   PutObjectCommand,
@@ -7,12 +10,6 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { v4 as uuidv4 } from "uuid";
 import { admin, protect } from "../middlewares/authMiddleware.js";
 import asyncHandler from "../middlewares/asyncHandler.js";
-import dotenv from "dotenv";
-import express from "express";
-
-const router = express.Router();
-
-dotenv.config();
 
 // create your client and specify region
 const s3Client = new S3Client({ region: process.env.AWS_REGION_BUCKET });
