@@ -11,6 +11,7 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import { errorHandler, notFound } from "./middlewares/errorMiddleware.js";
 
 const port = process.env.PORT || 5000;
+const __dirname = path.resolve(); // set dir name to current directory
 
 //connect to MongoDB\
 connectDB();
